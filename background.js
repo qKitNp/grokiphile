@@ -1,4 +1,4 @@
-// Grokify - Background Service Worker
+// Grokiphile - Background Service Worker
 // Handles HEAD requests to bypass CORS restrictions
 
 // Listen for messages from content script

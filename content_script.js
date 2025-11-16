@@ -1,4 +1,4 @@
-// Grokify - Vanilla Content Script
+// Grokiphile - Content Script
 // All logic runs locally, no server/proxy
 
 const GROK_DOMAIN = "https://grokipedia.com/page/";

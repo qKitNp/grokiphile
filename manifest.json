@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Grokify",
+  "name": "Grokiphile",
   "version": "0.0.1",
   "description": "Quick access to Grokipedia from Wikipedia articles",
   "permissions": [

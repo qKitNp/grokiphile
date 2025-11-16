@@ -1,4 +1,4 @@
-// Grokify - Options Script
+// Grokiphile - Options Script
 
 // Load saved mode
 async function loadMode() {

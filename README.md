@@ -1,4 +1,4 @@
-# Grokify - Vanilla
+# Grokiphile
 
 A Chrome extension (Manifest V3) that provides quick access to Grokipedia from Wikipedia articles. Built with vanilla JavaScript - no frameworks, all logic runs locally in the content script.
 
@@ -105,7 +105,7 @@ Change this constant to your desired domain.
 
 **Debug Steps:**
 1. Open browser DevTools (F12)
-2. Check the Console tab for `[Grokify]` log messages
+2. Check the Console tab for `[Grokiphile]` log messages
 3. Verify the extension is enabled and has permissions
 
 ### Redirect Mode Not Working

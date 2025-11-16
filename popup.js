@@ -1,4 +1,4 @@
-// Grokify - Popup Script
+// Grokiphile - Popup Script
 
 // Load saved mode
 async function loadMode() {
