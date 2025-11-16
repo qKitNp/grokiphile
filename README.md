@@ -69,6 +69,7 @@ Visit: `https://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand`
 Visit a Wikipedia article that doesn't have a corresponding Grokipedia page. The extension should:
 - Not show a panel
 - Not redirect
+- Log the 404 status in the console (if DEBUG is enabled)
 
 ## Configuration
 
@@ -82,6 +83,13 @@ const GROK_DOMAIN = "https://grokipedia.com/page/";
 
 Change this constant to your desired domain.
 
+### Debug Mode
+
+The extension includes debug logging. To disable, edit `content_script.js` and `options.js`:
+
+```javascript
+const DEBUG = false; // Set to false to disable console logs
+```
 
 ## Troubleshooting
 
@@ -200,6 +208,6 @@ This extension is provided as-is for educational and personal use.
 
 For issues or questions:
 1. Check the Troubleshooting section above
-2. Verify all files are present and manifest.json is valid
-3. Ensure the extension is enabled and has proper permissions
+2. Review browser console logs (enable DEBUG mode)
+3. Verify all files are present and manifest.json is valid
 

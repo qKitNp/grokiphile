@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grokify Icon Generator</title>
+</head>
+<body>
+  <h1>Grokify Icon Generator</h1>
+  <p>Click the button below to generate icons. They will be downloaded automatically.</p>
+  <button onclick="generateIcons()">Generate Icons</button>
+  <div id="status"></div>
+
+  <script>
+    function generateIcons() {
+      const sizes = [16, 32, 48, 128];
+      const status = document.getElementById('status');
+      status.innerHTML = 'Generating icons...<br>';
+
+      sizes.forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Draw background circle
+        ctx.fillStyle = '#0645ad'; // Wikipedia blue
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2 - size / 8, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw 'G' text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${size / 2}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('G', size / 2, size / 2);
+
+        // Download
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `grok-${size}.png`;
+          a.click();
+          URL.revokeObjectURL(url);
+          status.innerHTML += `Generated grok-${size}.png<br>`;
+        });
+      });
+
+      status.innerHTML += '<br><strong>All icons generated! Save them to the icons/ folder.</strong>';
+    }
+  </script>
+</body>
+</html>
+

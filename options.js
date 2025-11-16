@@ -1,10 +1,19 @@
-// Grokify - Options Script
+// Grokify - Vanilla Options Script
+
+const DEBUG = true;
+
+function log(...args) {
+  if (DEBUG) {
+    console.log('[Grokify Options]', ...args);
+  }
+}
 
 // Load saved mode
 async function loadMode() {
   try {
     const result = await chrome.storage.sync.get(['mode']);
     const mode = result.mode || 'prompt';
+    log('Loaded mode:', mode);
 
     // Set radio button
     const radio = document.getElementById(`mode-${mode}`);
@@ -12,7 +21,7 @@ async function loadMode() {
       radio.checked = true;
     }
   } catch (error) {
-    // Silently handle error
+    log('Error loading mode:', error);
   }
 }
 
@@ -20,8 +29,10 @@ async function loadMode() {
 async function saveMode(mode) {
   try {
     await chrome.storage.sync.set({ mode });
+    log('Saved mode:', mode);
     showStatus('Settings saved!');
   } catch (error) {
+    log('Error saving mode:', error);
     showStatus('Error saving settings. Please try again.', true);
   }
 }
@@ -43,6 +54,8 @@ function showStatus(message, isError = false) {
 
 // Handle radio button changes
 document.addEventListener('DOMContentLoaded', () => {
+  log('Options page loaded');
+
   // Load current mode
   loadMode();
 

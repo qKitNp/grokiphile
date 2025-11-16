@@ -1,10 +1,19 @@
 // Grokify - Popup Script
 
+const DEBUG = true;
+
+function log(...args) {
+  if (DEBUG) {
+    console.log('[Grokify Popup]', ...args);
+  }
+}
+
 // Load saved mode
 async function loadMode() {
   try {
     const result = await chrome.storage.sync.get(['mode']);
     const mode = result.mode || 'prompt';
+    log('Loaded mode:', mode);
 
     // Set radio button
     const radio = document.getElementById(`mode-${mode}`);
@@ -13,7 +22,7 @@ async function loadMode() {
       updateSelectedOption(mode);
     }
   } catch (error) {
-    // Silently handle error
+    log('Error loading mode:', error);
   }
 }
 
@@ -35,9 +44,11 @@ function updateSelectedOption(mode) {
 async function saveMode(mode) {
   try {
     await chrome.storage.sync.set({ mode });
+    log('Saved mode:', mode);
     updateSelectedOption(mode);
     showStatus('Saved!');
   } catch (error) {
+    log('Error saving mode:', error);
     showStatus('Error saving', true);
   }
 }
@@ -58,6 +69,8 @@ function showStatus(message, isError = false) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  log('Popup loaded');
+
   // Load current mode
   loadMode();
 

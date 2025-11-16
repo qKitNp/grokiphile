@@ -1,13 +1,22 @@
 // Grokify - Vanilla Content Script
 // All logic runs locally, no server/proxy
 
+const DEBUG = true; // Set to false in production
 const GROK_DOMAIN = "https://grokipedia.com/page/";
+
+// Logging helper
+function log(...args) {
+  if (DEBUG) {
+    console.log('[Grokify]', ...args);
+  }
+}
 
 // Extract article title from page
 function extractTitle() {
   // Try to get from DOM first
   const heading = document.getElementById('firstHeading');
   if (heading && heading.textContent.trim()) {
+    log('Title from DOM:', heading.textContent.trim());
     return heading.textContent.trim();
   }
 
@@ -15,9 +24,11 @@ function extractTitle() {
   const urlMatch = window.location.pathname.match(/\/wiki\/(.+)$/);
   if (urlMatch) {
     const title = decodeURIComponent(urlMatch[1].replace(/_/g, ' '));
+    log('Title from URL:', title);
     return title;
   }
 
+  log('Could not extract title');
   return null;
 }
 
@@ -27,13 +38,17 @@ function buildGrokUrl(title) {
   // Replace spaces with underscores for URL
   const urlTitle = title.replace(/\s+/g, '_');
   const encodedTitle = encodeURIComponent(urlTitle);
-  return `${GROK_DOMAIN}${encodedTitle}`;
+  const fullUrl = `${GROK_DOMAIN}${encodedTitle}`;
+  log('Built URL - Original title:', title, '| URL title:', urlTitle, '| Encoded:', encodedTitle, '| Full URL:', fullUrl);
+  return fullUrl;
 }
 
 // Check if Grokipedia page exists via HEAD request
 // Uses background service worker to bypass CORS restrictions
 async function checkGrokExists(url) {
   try {
+    log('Checking existence via background script:', url);
+    
     // Send message to background script to make the request
     const response = await chrome.runtime.sendMessage({
       action: 'checkGrokExists',
@@ -41,11 +56,15 @@ async function checkGrokExists(url) {
     });
 
     if (!response) {
+      log('No response from background script');
       return { exists: null, error: 'No response from background script' };
     }
 
+    log('Check result from background:', response);
     return response;
   } catch (error) {
+    // Error communicating with background script
+    log('Error checking existence:', error.message);
     return { exists: null, error: error.message };
   }
 }
@@ -56,6 +75,7 @@ async function getUserMode() {
     const result = await chrome.storage.sync.get(['mode']);
     return result.mode || 'prompt';
   } catch (error) {
+    log('Error getting user mode:', error);
     return 'prompt';
   }
 }
@@ -122,6 +142,7 @@ function injectPanel(grokUrl, state) {
 
   const heading = document.getElementById('firstHeading') || document.querySelector('h1');
   if (!heading) {
+    log('No heading found for panel injection');
     return;
   }
 
@@ -182,21 +203,28 @@ function injectPanel(grokUrl, state) {
 
   // Insert after heading
   heading.parentNode.insertBefore(panel, heading.nextSibling);
+
+  log('Panel injected with state:', state);
 }
 
 // Extract title from URL (faster, doesn't require DOM)
 function extractTitleFromUrl() {
   const urlMatch = window.location.pathname.match(/\/wiki\/(.+)$/);
   if (urlMatch) {
-    return decodeURIComponent(urlMatch[1].replace(/_/g, ' '));
+    const title = decodeURIComponent(urlMatch[1].replace(/_/g, ' '));
+    log('Title from URL:', title);
+    return title;
   }
   return null;
 }
 
 // Main execution
 async function main() {
+  log('Content script loaded');
+
   // Check mode first - for redirect mode, prefer URL extraction for speed
   const mode = await getUserMode();
+  log('User mode:', mode);
 
   let title;
   if (mode === 'redirect') {
@@ -208,15 +236,20 @@ async function main() {
   }
 
   if (!title) {
+    log('No title found, aborting');
     return;
   }
 
   const grokUrl = buildGrokUrl(title);
   if (!grokUrl) {
+    log('Could not build Grokipedia URL');
     return;
   }
 
+  log('Grokipedia URL:', grokUrl);
+
   const checkResult = await checkGrokExists(grokUrl);
+  log('Check result:', checkResult);
 
   // Determine state
   let state;
@@ -230,6 +263,7 @@ async function main() {
 
   // Handle redirect mode
   if (mode === 'redirect' && state === 'exists') {
+    log('Redirecting to Grokipedia');
     window.location.replace(grokUrl);
     return;
   }
