@@ -1,0 +1,79 @@
+/* Grokify - Icon Button Styles */
+
+#grokify-panel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  margin: 0 8px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+  vertical-align: middle;
+}
+
+#grokify-panel:hover {
+  transform: scale(1.1);
+}
+
+#grokify-panel:active {
+  transform: scale(0.95);
+}
+
+#grokify-panel:focus {
+  outline: 2px solid #36c;
+  outline-offset: 2px;
+}
+
+.grokify-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  filter: brightness(0) invert(1);
+}
+
+/* Light mode - dark button background (default) */
+#grokify-panel.grokify-light-mode {
+  background: #1a1a1a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#grokify-panel.grokify-light-mode:hover {
+  background-color: #2a2a2a;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+#grokify-panel.grokify-light-mode .grokify-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Dark mode - light/transparent button background */
+#grokify-panel.grokify-dark-mode {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#grokify-panel.grokify-dark-mode:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+#grokify-panel.grokify-dark-mode .grokify-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grokify-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  #grokify-panel {
+    margin: 0 4px;
+  }
+}
+

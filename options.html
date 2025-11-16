@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grokify - Options</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0645ad;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #54595d;
+      margin-bottom: 30px;
+    }
+    .option-group {
+      margin: 30px 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #a7d7f9;
+    }
+    .option-group label {
+      display: block;
+      margin: 15px 0;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .option-group label:hover {
+      background-color: #e8f4f8;
+    }
+    .option-group input[type="radio"] {
+      margin-right: 10px;
+    }
+    .option-group strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #0645ad;
+    }
+    .option-group .description {
+      color: #54595d;
+      font-size: 14px;
+      margin-left: 26px;
+    }
+    .privacy-note {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .privacy-note strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .status.success {
+      background-color: #d4edda;
+      border: 1px solid #28a745;
+      color: #155724;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Grokify - Vanilla</h1>
+  <p class="subtitle">Options & Settings</p>
+
+  <div class="option-group">
+    <label>
+      <input type="radio" name="mode" value="prompt" id="mode-prompt">
+      <strong>Prompt Mode (Default)</strong>
+      <span class="description">Show a small panel/icon near the article heading. Click to open Grokipedia in a new tab.</span>
+    </label>
+    <label>
+      <input type="radio" name="mode" value="redirect" id="mode-redirect">
+      <strong>Redirect Mode</strong>
+      <span class="description">Automatically redirect to Grokipedia when the page exists (confirmed via HEAD request).</span>
+    </label>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div class="privacy-note">
+    <strong>Privacy Note</strong>
+    This extension only reads the Wikipedia article title to build the corresponding Grokipedia URL. It performs a HEAD request to check if the Grokipedia page exists. No page content, user data, or browsing history is collected, stored, or transmitted. All checks are performed locally in your browser.
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
+

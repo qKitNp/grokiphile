@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Grokify",
+  "version": "0.0.1",
+  "description": "Quick access to Grokipedia from Wikipedia articles",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.wikipedia.org/*",
+    "https://grokipedia.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.wikipedia.org/wiki/*",
+        "*://*.wikipedia.org/*/wiki/*"
+      ],
+      "js": ["content_script.js"],
+      "css": ["content_style.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/grok_icon.png",
+      "32": "icons/grok_icon.png",
+      "48": "icons/grok_icon.png",
+      "128": "icons/grok_icon.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/grok_icon.png",
+    "32": "icons/grok_icon.png",
+    "48": "icons/grok_icon.png",
+    "128": "icons/grok_icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/grok_icon.png"],
+      "matches": ["*://*.wikipedia.org/*"]
+    }
+  ]
+}
+
