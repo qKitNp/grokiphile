@@ -5,8 +5,7 @@
   "description": "Quick access to Grokipedia from Wikipedia articles",
   "permissions": [
     "storage",
-    "tabs",
-    "scripting"
+    "tabs"
   ],
   "host_permissions": [
     "https://*.wikipedia.org/*",
