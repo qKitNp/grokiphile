@@ -4,11 +4,9 @@
   "version": "0.0.1",
   "description": "Quick access to Grokipedia from Wikipedia articles",
   "permissions": [
-    "storage",
-    "tabs"
+    "storage"
   ],
   "host_permissions": [
-    "https://*.wikipedia.org/*",
     "https://grokipedia.com/*"
   ],
   "background": {
@@ -20,8 +18,12 @@
         "*://*.wikipedia.org/wiki/*",
         "*://*.wikipedia.org/*/wiki/*"
       ],
-      "js": ["content_script.js"],
-      "css": ["content_style.css"],
+      "js": [
+        "content_script.js"
+      ],
+      "css": [
+        "content_style.css"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -43,9 +45,12 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icons/grok_icon.png"],
-      "matches": ["*://*.wikipedia.org/*"]
+      "resources": [
+        "icons/grok_icon.png"
+      ],
+      "matches": [
+        "*://*.wikipedia.org/*"
+      ]
     }
   ]
 }
-
